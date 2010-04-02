@@ -1,0 +1,55 @@
+= taggie
+
+The tiniest little HTML/XML parser...using regex
+
+  gem install taggie
+
+
+== WTF, why regex?!?
+
+Curiosity and regex practice, but mostly for funsies. Here's the beast of a regex that parses arbitrarily nested tags, if you're interested:
+
+  (<(\w+)[^>]*(?:\/>|>((?:<(\w+)[^>]*(?:\/>|>.*<\/\4>)|<!--.*?-->|<\?.*?\?>|[^>])*)<\/\2>)|<!--.*?-->|<\?.*?\?>|[^>]*)
+
+
+== Examples
+
+  html = '<div id="header"><img src="logo.png" /><h1>Your Company</h1></div><div id="body"><p class="content">some <span>content</span> here</p></div>'.to_taggie
+  puts html.type                                # div
+  puts html.tag                                 # <div id="header">
+  puts html.inner_html                          # <img src="logo.png" /><h1>Your Company</h1>
+  
+  puts html.children.first.src                  # logo.png
+  html.children.first.src = '/images/logo.png'
+  puts html.inner_html                          # <img src="/images/logo.png" /><h1>Your Company</h1>
+  
+  p = html.siblings.first.children.first
+  puts p.tag                                    # <p class="content">
+  
+  p.id = 'content'
+  puts html.siblings.first.children.first       # <p class="content" id="content">Blah blah blah</p>
+  
+  p.class = nil
+  puts html.siblings.first.children.first       # <p id="content">Blah blah blah</p>
+  
+  p.class = ''
+  puts html.siblings.first.children.first       # <p id="content" class="">Blah blah blah</p>
+
+
+== TODO
+
+* attribute writer is broken
+* lib/taggie_unabridged.rb
+* tests
+
+
+== Note on Patches/Pull Requests
+
+* Fork the project.
+* Make your feature addition or bug fix.
+* Add tests for it. This is important so I don't break it in a
+  future version unintentionally.
+* Commit, do not mess with rakefile, version, or history.
+  (if you want to have your own version, that is fine but
+   bump version in a commit by itself I can ignore when I pull)
+* Send me a pull request. Bonus points for topic branches.
