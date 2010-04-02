@@ -12,7 +12,7 @@ Curiosity, regex practice, and proof that it could be done. If you're interested
   /(<(\w+)[^>]*(?:\/>|>((?:<(\w+)[^>]*(?:\/>|>.*<\/\4>)|<!--.*?-->|<\?.*?\?>|[^>])*)<\/\2>)|<!--.*?-->|<\?.*?\?>|[^>]*)/m
 
 
-== Examples
+== Examples (these all may not work yet - work in progress)
 
   html = '<div id="header"><img src="logo.png" /><h1>Your Company</h1></div><div id="body"><p class="content">some <span>content</span> here</p></div>'.to_taggie
   puts html.type                                # div
