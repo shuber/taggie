@@ -12,7 +12,7 @@ Curiosity, regex practice, and proof that it could be done. If you're interested
   /(<(\w+)[^>]*(?:\/>|>((?:<(\w+)[^>]*(?:\/>|>.*<\/\4>)|<!--.*?-->|<\?.*?\?>|[^>])*)<\/\2>)|<!--.*?-->|<\?.*?\?>|[^>]*)/m
 
 
-== Examples (these may not all work yet - work in progress)
+== Examples
 
   html = '<div id="header"><img src="logo.png" /><h1>Your Company</h1></div><div id="body"><p class="content">some <span>content</span> here</p></div>'.to_taggie
   puts html.type                                # div
@@ -38,8 +38,7 @@ Curiosity, regex practice, and proof that it could be done. If you're interested
 
 == TODO
 
-* attribute writer is broken
-* lib/taggie_unabridged.rb
+* siblings
 * tests
 
 
