@@ -1,3 +1,4 @@
+require 'taggie/collection'
 require 'taggie/string'
 
 class String
