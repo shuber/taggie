@@ -10,7 +10,7 @@ module Taggie
 
     [:<<, :clear, :compact!, :delete, :delete_at, :delete_if, :insert, :pop, :push, :reject!, :reverse!, :slice!, :sort!, :uniq!].each do |method|
       define_method(method) do |*args|
-        result = super
+        result = super(*args)
         parent.rebuild! if parent
         result
       end

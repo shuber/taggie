@@ -8,7 +8,7 @@ module Taggie
     SpecialTags = '<!--.*?-->|<\?.*?\?>|[^>]'
     TagMatcher = /(#{OpenTag}(?:#{CloseTag}((?:#{OpenTag}(?:#{CloseTag}.*<\/\4>)|#{SpecialTags})*)<\/\2>)|#{SpecialTags}*)/m
 
-    undef :id
+    undef :id if instance_methods.include?('id')
 
     attr_accessor :parent
 
