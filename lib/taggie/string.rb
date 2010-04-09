@@ -39,7 +39,7 @@ module Taggie
     end
 
     def children
-      @children ||= Collection.new(inner_html.siblings_and_self(false).map! { |child| child.parent = self; child }, self)
+      @children ||= Array.new(inner_html.siblings_and_self(false).map! { |child| child.parent = self; child }, self)
     end
 
     def class_name
@@ -102,7 +102,7 @@ module Taggie
     end
 
     def siblings_and_self(lookup_parent = true)
-      lookup_parent && parent ? parent.children : Collection.new(scan(inner_html_regex[0]).map! { |match| match[0].parent = parent; match[0] }, parent)
+      lookup_parent && parent ? parent.children : Array.new(scan(inner_html_regex[0]).map! { |match| match[0].parent = parent; match[0] }, parent)
     end
 
     def tag

@@ -1,5 +1,5 @@
 module Taggie
-  class Collection < Array
+  class Array < Array
 
     attr_reader :parent
 
