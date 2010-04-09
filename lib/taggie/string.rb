@@ -117,7 +117,7 @@ module Taggie
     end
 
     def to_s
-      String.new(self)
+      ::String.new(self)
     end
 
     def type
