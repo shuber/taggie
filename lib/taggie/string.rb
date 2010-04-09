@@ -13,12 +13,12 @@ module Taggie
     attr_accessor :parent
 
     def [](attribute)
-      [Integer, Range].include?(attribute.class) ? super : to_h[attribute.to_s]
+      [Integer, Range].include?(attribute.class) ? super(attribute) : to_h[attribute.to_s]
     end
 
     def []=(attribute, value)
       if [Integer, Range].include?(attribute.class)
-        value = super
+        value = super(attribute, value)
       elsif !%w(comment string).include?(type)
         quote = value.to_s.include?('"') ? "'" : '"'
         if value.nil?
