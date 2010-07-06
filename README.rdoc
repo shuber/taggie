@@ -11,6 +11,8 @@ Curiosity, regex practice, and proof that it could be done. If you're interested
 
   /(<(\w+)[^>]*(?:\/>|>((?:<(\w+)[^>]*(?:\/>|>.*<\/\4>)|<!--.*?-->|<\?.*?\?>|[^>])*)<\/\2>)|<!--.*?-->|<\?.*?\?>|[^>]*)/m
 
+You can test out the regex here: http://rubular.com/r/y1k1WMfADx
+
 
 == Examples (these all may not work yet - work in progress)
 
