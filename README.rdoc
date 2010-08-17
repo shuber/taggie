@@ -7,11 +7,7 @@ The tiniest little HTML/XML parser...using regex
 
 == WTF, why regex?!?
 
-Curiosity, regex practice, and proof that it could be done. If you're interested, here's the beast of a regex that parses arbitrarily nested tags:
-
-  /(<(\w+)[^>]*(?:\/>|>((?:<(\w+)[^>]*(?:\/>|>.*<\/\4>)|<!--.*?-->|<\?.*?\?>|[^<])*)<\/\2>)|<!--.*?-->|<\?.*?\?>|[^<]*)/m
-
-You can test out the regex here: http://rubular.com/r/DKFRChWzup
+Curiosity, regex practice, and to understand the limitations of regular expressions
 
 
 == Examples (these all may not work yet - work in progress)
