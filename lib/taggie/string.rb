@@ -13,13 +13,13 @@ module Taggie
     attr_accessor :parent
 
     def [](attribute)
-      [Integer, Range].include?(attribute.class) ? super(attribute) : to_h[attribute.to_s]
+      [Integer, Range].include?(attribute.class) ? super(attribute) : to_h[attribute.to_sym]
     end
 
     def []=(attribute, value)
       if [Integer, Range].include?(attribute.class)
         value = super(attribute, value)
-      elsif !%w(comment string).include?(type)
+      elsif ![:comment, :string].include?(type)
         quote = value.to_s.include?('"') ? "'" : '"'
         if value.nil?
           sub!(/^(#{AttributePrefix})\s+#{attribute}=(?:#{AttributeValue})/m, '\1')
@@ -35,7 +35,7 @@ module Taggie
     end
 
     def attributes
-      @attributes ||= %w(comment doctype string).include?(type) ? [] : tag.scan(/([\S]+)=(?:#{AttributeValue})/m).map! { |match| [match[0], match[2] || match[3]] }
+      @attributes ||= [:comment, :doctype, :string].include?(type) ? [] : tag.scan(/([\S]+)=(?:#{AttributeValue})/m).map! { |match| [match[0].to_sym, match[2] || match[3]] }
     end
 
     def children
@@ -43,11 +43,11 @@ module Taggie
     end
 
     def class_name
-      self['class']
+      self[:class]
     end
 
     def class_name=(value)
-      self['class'] = value
+      self[:class] = value
     end
 
     def dup
@@ -73,7 +73,7 @@ module Taggie
 
     def inner_html_regex
       @inner_html_regex ||= begin
-        @inner_html_regex_hash ||= { 'comment' => /^<!--(.*?)-->/m, 'doctype' => //, 'string' => /^([^<]+)/m, 'xml' => // }
+        @inner_html_regex_hash ||= { :comment => /^<!--(.*?)-->/m, :doctype => //, :string => /^([^<]+)/m, :xml => // }
         regex, capture_index = @inner_html_regex_hash[type], 0
         regex, capture_index = TagMatcher, 2 if regex.nil?
         [regex, capture_index]
@@ -82,9 +82,9 @@ module Taggie
 
     def method_missing(method, *args)
       if method.to_s =~ /=$/
-        self[$`] = args[0]
+        self[$`.to_sym] = args[0]
       elsif args.empty?
-        self[method.to_s]
+        self[method.to_sym]
       else
         super
       end
@@ -107,7 +107,7 @@ module Taggie
 
     def tag
       @tag ||= begin
-        @tag_hash ||= { 'comment' => self, 'string' => inner_html }
+        @tag_hash ||= { :comment => self, :string => inner_html }
         @tag_hash[type] || match(/^([^>]+>)/m).captures[0]
       end
     end
@@ -122,9 +122,9 @@ module Taggie
 
     def type
       @type ||= begin
-        @type_hash ||= { (/^<\??([^!\s]+)/m) => 1, (/^<!--/) => 'comment', (/^<!doctype/i) => 'doctype', (/^[^<]*/m) => 'string' }
-        type = @type_hash.detect { |regex, value| self =~ regex }[1]
-        type.is_a?(Integer) ? eval("$#{type}").downcase : type
+        @type_hash ||= { 1 => /^<\??([^!\s]+)/m, :comment => /^<!--/m, :doctype => /^<!doctype/im, :string => /^[^<]*/m }
+        type = @type_hash.detect { |value, regex| self =~ regex }[1]
+        type.is_a?(Integer) ? eval("$#{type}").downcase.to_sym : type
       end
     end
 

@@ -1,8 +1,11 @@
-require 'taggie/array'
-require 'taggie/string'
+# HTML/XML parsing with regex
+module Taggie
+  autoload :Array,  'taggie/array'
+  autoload :String, 'taggie/string'
 
-class String
   def to_taggie
-    Taggie::String.new(self)
+    String.new(self)
   end
 end
+
+String.send(:include, Taggie)

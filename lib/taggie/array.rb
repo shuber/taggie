@@ -1,6 +1,5 @@
 module Taggie
   class Array < Array
-
     attr_reader :parent
 
     def initialize(array, parent)
@@ -15,6 +14,5 @@ module Taggie
         result
       end
     end
-
   end
 end
